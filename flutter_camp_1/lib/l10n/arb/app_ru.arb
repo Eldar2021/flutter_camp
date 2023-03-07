@@ -1,0 +1,6 @@
+{
+    "helloWorld": "Privet mir",
+    "@helloWorld": {
+        "description": "The conventional newborn programmer greeting"
+    }
+}
