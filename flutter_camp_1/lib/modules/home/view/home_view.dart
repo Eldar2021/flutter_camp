@@ -4,6 +4,7 @@ import 'package:flutter_camp_1/core/core.dart';
 import 'package:flutter_camp_1/l10n/l10n.dart';
 import 'package:flutter_camp_1/models/models.dart';
 import 'package:flutter_camp_1/modules/home/home.dart';
+import 'package:flutter_camp_1/modules/settings/settings.dart';
 import 'package:http/http.dart';
 
 class HomeView extends StatelessWidget {
@@ -38,22 +39,36 @@ class _HomeBodyState extends State<HomeBody> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.helloWorld),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push<void>(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const SettingsView(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.settings),
+          ),
+        ],
       ),
-      body: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
-          switch (state.status) {
-            case FetchStatus.loading:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            case FetchStatus.error:
-              return const Center(
-                child: Text('Error'),
-              );
-            case FetchStatus.success:
-              return PostListWidget(state.posts ?? []);
-          }
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(14),
+        child: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            switch (state.status) {
+              case FetchStatus.loading:
+                return const Center(child: CircularProgressIndicator());
+              case FetchStatus.error:
+                return const Center(
+                  child: Text('Error'),
+                );
+              case FetchStatus.success:
+                return PostListWidget(state.posts ?? []);
+            }
+          },
+        ),
       ),
     );
   }

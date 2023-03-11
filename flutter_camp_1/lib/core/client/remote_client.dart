@@ -12,7 +12,7 @@ class RemoteClient {
   Future<List<Post>?> get() async {
     try {
       final uri = Uri.parse('https://jsonplaceholder.typicode.com/posts');
-      final response = await client.delete(uri);
+      final response = await client.get(uri);
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as List;
         final posts = body.map((e) => Post.fromJson(e)).toList();
